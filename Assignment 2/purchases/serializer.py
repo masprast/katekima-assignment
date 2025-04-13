@@ -18,22 +18,48 @@ class PurchaseDetailSerializer(serializers.ModelSerializer):
 
 class PurchaseHeaderSerializer(serializers.ModelSerializer):
     details = PurchaseDetailSerializer(many=True, read_only=True)
-    code = serializers.CharField(
-        max_length=5,
-        min_length=5,
-        validators=[MinLengthValidator(5), MaxLengthValidator(5)],
-    )
+    code = serializers.CharField(max_length=5, min_length=5)
 
     class Meta:
         model = PurchaseHeader
         fields = ["code", "date", "description", "details"]
         read_only_fields = ["created_at", "updated_at", "is_deleted"]
+        extra_kwargs = {
+            "code": {"validators": [MinLengthValidator(5), MaxLengthValidator(5)]}
+        }
 
 
 class PurchaseHeaderModifySerializer(serializers.ModelSerializer):
+    code = serializers.CharField(max_length=5, min_length=5)
+
     class Meta:
         model = PurchaseHeader
         fields = ["code", "date", "description"]
+        read_only_fields = ["created_at", "updated_at", "is_deleted"]
+        extra_kwargs = {
+            "code": {"validators": [MinLengthValidator(5), MaxLengthValidator(5)]}
+        }
+
+    def validate_code(self, value):
+        # Cek jika purchase code sudah ada
+        if self.instance is None:  # Create
+            if PurchaseHeader.objects.filter(
+                code__iexact=value, is_deleted=False
+            ).exists():
+                raise serializers.ValidationError(
+                    f"Purchase with code {value} already exists."
+                )
+        else:  # Update
+            if (
+                value.lower() != self.instance.code.lower()
+                and PurchaseHeader.objects.filter(code__iexact=value, is_deleted=False)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    f"Purchase with code {value} already exists."
+                )
+        return value
 
 
 class PurchaseDetailModifySerializer(serializers.ModelSerializer):

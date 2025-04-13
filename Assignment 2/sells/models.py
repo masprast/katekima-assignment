@@ -1,16 +1,11 @@
 from django.db import models
 from items.models import Item
 from stock_warehouse.models import BaseModel
-from django.core.validators import MaxLengthValidator, MinLengthValidator
 
 
 # Create your models here.
 class SellHeader(BaseModel):
-    code = models.CharField(
-        max_length=5,
-        unique=True,
-        validators=[MaxLengthValidator(5), MinLengthValidator(5)],
-    )
+    code = models.CharField(unique=True)
     date = models.DateField()
     description = models.TextField()
 

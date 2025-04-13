@@ -1,5 +1,4 @@
-from email import header
-import re
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from rest_framework import serializers
 from .models import SellHeader, SellDetail
 from items.models import Item
@@ -18,36 +17,45 @@ class SellDetailSerializer(serializers.ModelSerializer):
 
 class SellHeaderSerializer(serializers.ModelSerializer):
     details = SellDetailSerializer(many=True, read_only=True)
+    code = serializers.CharField(max_length=5, min_length=5)
 
     class Meta:
         model = SellHeader
         fields = ["code", "date", "description", "details"]
         read_only_fields = ["created_at", "updated_at", "is_deleted", "details"]
-
-    # def create(self, validated_data):
-    #     details_data = validated_data.pop("details", [])
-    #     header = SellHeader.objects.create(**validated_data)
-    #     for detail_data in details_data:
-    #         SellDetail.objects.create(header_code=header, **detail_data)
-    #     return header
-
-    # def update(self, instance, validated_data):
-    #     details_data = validated_data.pop("details", [])
-    #     instance.code = validated_data.get("code", instance.code)
-    #     instance.date = validated_data.get("date", instance.date)
-    #     instance.description = validated_data.get("description", instance.description)
-    #     instance.save()
-
-    #     instance.details.all().delete()
-    #     for detail_data in details_data:
-    #         SellDetail.objects.create(header_code=instance, **detail_data)
-    #     return instance
+        extra_kwargs = {
+            "code": {"validators": [MinLengthValidator(5), MaxLengthValidator(5)]}
+        }
 
 
 class SellHeaderModifySerializer(serializers.ModelSerializer):
+    code = serializers.CharField(max_length=5, min_length=5)
+
     class Meta:
         model = SellHeader
         fields = ["code", "date", "description"]
+        extra_kwargs = {
+            "code": {"validators": [MinLengthValidator(5), MaxLengthValidator(5)]}
+        }
+
+    def validate_code(self, value):
+        # Cek jika sell code sudah ada
+        if self.instance is None:  # Create
+            if SellHeader.objects.filter(code__iexact=value, is_deleted=False).exists():
+                raise serializers.ValidationError(
+                    f"Sell with code {value} already exists."
+                )
+        else:  # Update
+            if (
+                value.lower() != self.instance.code.lower()
+                and SellHeader.objects.filter(code__iexact=value, is_deleted=False)
+                .exclude(pk=self.instance.pk)
+                .exists()
+            ):
+                raise serializers.ValidationError(
+                    f"Sell with code {value} already exists."
+                )
+        return value
 
 
 class SellDetailModifySerializer(serializers.ModelSerializer):
