@@ -46,5 +46,7 @@ class ItemModifySerializer(serializers.ModelSerializer):
                 .exclude(pk=self.instance.pk)
                 .exists()
             ):
-                raise serializers.ValidationError("Item with this code already exists.")
+                raise serializers.ValidationError(
+                    f"Item with code {value} already exists."
+                )
         return value
