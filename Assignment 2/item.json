@@ -1,0 +1,8 @@
+{
+	"code": "I-001",
+	"name": "History Book",
+	"unit": "Pcs",
+	"description": "Books that tells history of the ancient",
+	"stock": 5,
+	"balance": 250000
+}

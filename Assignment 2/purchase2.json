@@ -1,0 +1,13 @@
+{
+	"code": "P-002",
+	"date": "2025-02-01",
+	"description": "Restock history books",
+	"details": [
+		{
+			"item_code": "I-001",
+			"quantity": 10,
+			"unit_price": 50000,
+			"header_code": "P-002"
+		}
+	]
+}

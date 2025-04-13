@@ -1,0 +1,6 @@
+{
+	"code": "S-001",
+	"date": "2025-03-01",
+	"description": "Sell history books to library",
+	"details": [{ "item_code": "I-001", "quantity": 15, "header_code": "S-001" }]
+}

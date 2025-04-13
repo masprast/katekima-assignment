@@ -1,0 +1,13 @@
+{
+	"code": "P-001",
+	"date": "2025-01-01",
+	"description": "Buy history books",
+	"details": [
+		{
+			"item_code": "I-001",
+			"quantity": 10,
+			"unit_price": 60000,
+			"dealer_code": "P-001"
+		}
+	]
+}
