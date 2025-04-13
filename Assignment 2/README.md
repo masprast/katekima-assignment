@@ -1,6 +1,6 @@
 # ASSIGNMENT 2
 
-Di Assignment 2 ini adalah membuat backend menggunakan Django dengan django-rest-framework.
+Di Assignment 2 ini adalah membuat *backend* menggunakan **Django** dengan **django-rest-framework**.
 
 ### # Prerequisites
 1. Django v5.1 atau lebih baru
@@ -8,8 +8,8 @@ Di Assignment 2 ini adalah membuat backend menggunakan Django dengan django-rest
 3. virtualenv v20 atau lebih baru
 
 ### # Testing
-Untuk melakukan pengetesan, cukup dengan menjalankan file run_assignment2, karena skrip tersebut sudah mencakup
-setup environtment untuk menjalankan backend.
+Untuk melakukan pengetesan, cukup dengan menjalankan file `run_assignment2`, karena skrip tersebut sudah mencakup
+*setup environtment* untuk menjalankan *backend*.
 > * Dijalankan pada komputer dengan sistem operasi linux
 
 ```shell
@@ -17,11 +17,11 @@ setup environtment untuk menjalankan backend.
 ```
 
 #### # Database
-Database yang digunakan adalah konfigurasi default dari Django yang menggunakan SQLite, sehingga tidak
-perlu konfigurasi koneksi database lain.
+*Database* yang digunakan adalah konfigurasi *default* dari Django yang menggunakan **SQLite**, sehingga tidak
+perlu konfigurasi koneksi *database* lain.
 
 #### # Endpoint
-Sesuai dengan yang ada pada assignment, endpoint yang telah penulis tes dan konfirmasi berfungsi dengan baik.
+Sesuai dengan yang ada pada *assignment*, *endpoint* yang telah penulis tes dan konfirmasi berfungsi dengan baik.
 
 ---
 ### ## Items
@@ -543,6 +543,6 @@ Sesuai dengan yang ada pada assignment, endpoint yang telah penulis tes dan konf
 ---
 
 > <br/>
-> * NOTE: endpoint harus sesuai dan lengkap beserta trailing slash-nya, atau garis miring di akhir URL.
+> * NOTE: *endpoint* harus sesuai dan lengkap beserta **trailing slash**-nya, atau garis miring di akhir URL.
 >
 > <br/>
